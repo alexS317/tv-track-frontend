@@ -1,0 +1,7 @@
+{
+  "name": "tv-track-frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
