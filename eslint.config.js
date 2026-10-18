@@ -1,31 +1,35 @@
 // @ts-check
-const tseslint = require("typescript-eslint");
-const angular = require("angular-eslint");
+const { defineConfig } = require('eslint/config');
+const tseslint = require('typescript-eslint');
+const angular = require('angular-eslint');
+const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
 
-module.exports = tseslint.config(
+module.exports = defineConfig([
   {
-    files: ["**/*.ts"],
-    ignores: ["projects/**/*"],
-    extends: [...angular.configs.tsRecommended],
+    files: ['**/*.ts'],
+    ignores: ['projects/**/*'],
+    extends: [
+      tseslint.configs.recommended,
+      tseslint.configs.stylistic,
+      angular.configs.tsRecommended,
+      eslintPluginPrettierRecommended,
+    ],
     processor: angular.processInlineTemplates,
     rules: {
-      "@angular-eslint/component-class-suffix": [
-        "error",
-        { suffixes: ["Page", "Component"] },
+      '@angular-eslint/component-class-suffix': ['error', { suffixes: ['Page', 'Component'] }],
+      '@angular-eslint/component-selector': [
+        'error',
+        { type: 'element', prefix: 'app', style: 'kebab-case' },
       ],
-      "@angular-eslint/component-selector": [
-        "error",
-        { type: "element", prefix: "app", style: "kebab-case" },
-      ],
-      "@angular-eslint/directive-selector": [
-        "error",
-        { type: "attribute", prefix: "app", style: "camelCase" },
+      '@angular-eslint/directive-selector': [
+        'error',
+        { type: 'attribute', prefix: 'app', style: 'camelCase' },
       ],
     },
   },
   {
-    files: ["**/*.html"],
-    extends: [...angular.configs.templateRecommended],
+    files: ['**/*.html'],
+    extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     rules: {},
-  }
-);
+  },
+]);
