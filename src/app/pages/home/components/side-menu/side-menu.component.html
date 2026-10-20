@@ -1,0 +1,27 @@
+<ion-menu contentId="main">
+  <ion-header>
+    <ion-toolbar>
+      <div class="flex flex-row items-center gap-2 px-4">
+        <ion-icon name="film" size="large"></ion-icon>
+        <ion-title>TV Track</ion-title>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content></ion-content>
+
+  <ion-footer>
+    <ion-toolbar>
+      <div class="flex flex-row items-center justify-center gap-2 py-4">
+        <ion-icon name="sunny" size="large"></ion-icon>
+        <ion-toggle [checked]="isDark()" (ionChange)="onToggle($event)"></ion-toggle>
+        <ion-icon name="moon" size="large"></ion-icon>
+      </div>
+      <ion-buttons class="flex flex-row justify-center pb-2">
+        <ion-button (click)="onResetToSystemTheme()"
+          >Reset to system preferences</ion-button
+        >
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+</ion-menu>
