@@ -1,11 +1,10 @@
 import { effect, inject, Service, signal } from '@angular/core';
 import { UserPreferencesService } from './user-preferences.service';
 import { ToggleCustomEvent } from '@ionic/angular';
+import { UserPreferences } from '../constants/user-preferences.enum';
 
 @Service()
 export class ThemeService {
-  private readonly DARK_MODE_KEY = 'darkMode';
-
   private readonly userPreferencesService = inject(UserPreferencesService);
   private readonly themeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
   private readonly hasStoredPreference = signal<boolean>(false);
@@ -22,7 +21,7 @@ export class ThemeService {
   public async initialize(): Promise<void> {
     try {
       const stored = JSON.parse(
-        (await this.userPreferencesService.get(this.DARK_MODE_KEY)) ?? 'null',
+        (await this.userPreferencesService.get(UserPreferences.DARK_MODE)) ?? 'null',
       );
       this.hasStoredPreference.set(stored !== null);
 
@@ -37,7 +36,7 @@ export class ThemeService {
     const checked = event.detail.checked;
 
     try {
-      await this.userPreferencesService.set(this.DARK_MODE_KEY, JSON.stringify(checked));
+      await this.userPreferencesService.set(UserPreferences.DARK_MODE, JSON.stringify(checked));
       this.hasStoredPreference.set(true);
       this._isDark.set(checked);
     } catch (error) {
@@ -47,7 +46,7 @@ export class ThemeService {
 
   public async resetToSystemTheme(): Promise<void> {
     try {
-      await this.userPreferencesService.remove(this.DARK_MODE_KEY);
+      await this.userPreferencesService.remove(UserPreferences.DARK_MODE);
       this.hasStoredPreference.set(false);
       this._isDark.set(this.themeMediaQuery.matches);
     } catch (error) {

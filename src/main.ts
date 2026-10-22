@@ -12,6 +12,7 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { inject, provideAppInitializer } from '@angular/core';
 import { ThemeService } from './app/services/theme.service';
+import { provideHttpClient } from '@angular/common/http';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -19,5 +20,6 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules), withComponentInputBinding()),
     provideAppInitializer(() => inject(ThemeService).initialize()),
+    provideHttpClient(),
   ],
 });
