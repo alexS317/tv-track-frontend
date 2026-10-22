@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './guards/auth.guard';
+import { guestGuard } from './guards/guest.guard';
 
 export enum AppRoutes {
   HOME = '',
@@ -10,10 +12,17 @@ export const routes: Routes = [
   {
     path: AppRoutes.HOME,
     loadComponent: () => import('./pages/home/home.page').then(m => m.HomePage),
+    canActivate: [authGuard],
   },
   {
     path: AppRoutes.REGISTER,
     loadComponent: () => import('./pages/register/register.page').then(m => m.RegisterPage),
+    canActivate: [guestGuard],
+  },
+  {
+    path: AppRoutes.LOGIN,
+    loadComponent: () => import('./pages/login/login.page').then(m => m.LoginPage),
+    canActivate: [guestGuard],
   },
   {
     path: '**',

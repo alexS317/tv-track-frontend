@@ -17,10 +17,14 @@ import {
   IonToolbar,
   IonInputPasswordToggle,
   IonButton,
+  IonText,
+  IonRouterLinkWithHref,
 } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from '../../services/toast.service';
+import { AppRoutes } from '../../app.routes';
+import { Router, RouterLink } from '@angular/router';
 
 function passwordMatches(control: AbstractControl): ValidationErrors | null {
   const password = control.parent?.get('password')?.value;
@@ -32,6 +36,7 @@ function passwordMatches(control: AbstractControl): ValidationErrors | null {
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   imports: [
+    IonText,
     IonButton,
     IonInput,
     IonContent,
@@ -42,11 +47,15 @@ function passwordMatches(control: AbstractControl): ValidationErrors | null {
     FormsModule,
     IonInputPasswordToggle,
     ReactiveFormsModule,
+    RouterLink,
+    IonRouterLinkWithHref,
   ],
 })
 export class RegisterPage {
+  private readonly router = inject(Router);
   private readonly toastService = inject(ToastService);
   private readonly authService = inject(AuthService);
+  protected readonly routes = AppRoutes;
   protected readonly form = new FormGroup({
     name: new FormControl<string>('', [Validators.required]),
     email: new FormControl<string>('', [Validators.required, Validators.email]),
@@ -73,6 +82,8 @@ export class RegisterPage {
         password: this.form.value.password ?? '',
         passwordConfirmation: this.form.value.passwordConfirmation ?? '',
       });
+
+      this.router.navigate([this.routes.HOME]);
     } catch (error) {
       if (error instanceof HttpErrorResponse) {
         console.error({ status: error.status, message: error.error.detail });
