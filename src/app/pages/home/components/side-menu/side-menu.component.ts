@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, signal, OnDestroy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -12,7 +12,7 @@ import {
   IonToolbar,
   ToggleCustomEvent,
 } from '@ionic/angular';
-import { UserPreferencesService } from '../../../../services/user-preferences.service';
+import { ThemeService } from '../../../../services/theme.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -32,46 +32,15 @@ import { UserPreferencesService } from '../../../../services/user-preferences.se
     IonMenu,
   ],
 })
-export class SideMenuComponent implements OnInit, OnDestroy {
-  private readonly DARK_MODE = 'darkMode';
-  private readonly userPreferencesService = inject(UserPreferencesService);
-  private readonly themeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-  private readonly hasStoredPreference = signal(false);
-  protected readonly isDark = signal(false);
-
-  constructor() {
-    effect(() => document.documentElement.classList.toggle('ion-palette-dark', this.isDark()));
-  }
-
-  async ngOnInit(): Promise<void> {
-    const stored = JSON.parse((await this.userPreferencesService.get(this.DARK_MODE)) ?? 'null');
-    this.hasStoredPreference.set(stored !== null);
-
-    this.isDark.set(stored ?? this.themeMediaQuery.matches);
-
-    this.themeMediaQuery.addEventListener('change', this.onSystemChange);
-  }
-
-  ngOnDestroy(): void {
-    this.themeMediaQuery.removeEventListener('change', this.onSystemChange);
-  }
+export class SideMenuComponent {
+  private readonly themeService = inject(ThemeService);
+  protected readonly isDark = this.themeService.isDark;
 
   protected async onToggle(event: ToggleCustomEvent): Promise<void> {
-    const checked = event.detail.checked;
-    this.isDark.set(checked);
-    await this.userPreferencesService.set(this.DARK_MODE, JSON.stringify(checked));
+    await this.themeService.toggleTheme(event);
   }
 
   protected async onResetToSystemTheme(): Promise<void> {
-    await this.userPreferencesService.remove(this.DARK_MODE);
-    this.hasStoredPreference.set(false);
-    this.isDark.set(this.themeMediaQuery.matches);
-  }
-
-  // Match the system settings if the user hasn't stored a theme preference
-  private onSystemChange(event: MediaQueryListEvent): void {
-    if (!this.hasStoredPreference()) {
-      this.isDark.set(event.matches);
-    }
+    await this.themeService.resetToSystemTheme();
   }
 }
