@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
 import { guestGuard } from './guards/guest.guard';
+import { showsResolver } from './resolvers/shows.resolver';
 
 export enum AppRoutes {
   HOME = '',
@@ -13,6 +14,9 @@ export const routes: Routes = [
     path: AppRoutes.HOME,
     loadComponent: () => import('./pages/home/home.page').then(m => m.HomePage),
     canActivate: [authGuard],
+    resolve: {
+      shows: showsResolver,
+    },
   },
   {
     path: AppRoutes.REGISTER,

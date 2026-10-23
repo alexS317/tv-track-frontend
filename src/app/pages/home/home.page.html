@@ -14,7 +14,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" id="main">
-  <div class="flex h-full flex-col items-center justify-center">
-    <p>This is the current home view.</p>
-  </div>
+  <ul class="flex flex-col items-center gap-4 p-4">
+    @for (show of shows(); track show.id) {
+      <li class="w-full max-w-[600px]">
+        <app-show-card [show]="show"></app-show-card>
+      </li>
+    }
+  </ul>
 </ion-content>
