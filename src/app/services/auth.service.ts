@@ -34,7 +34,11 @@ export class AuthService {
     await this.userPreferencesService.remove(UserPreferences.AUTH_TOKEN);
   }
 
+  public async getAuthToken(): Promise<string | null> {
+    return await this.userPreferencesService.get(UserPreferences.AUTH_TOKEN);
+  }
+
   public async isLoggedIn(): Promise<boolean> {
-    return (await this.userPreferencesService.get(UserPreferences.AUTH_TOKEN)) !== null;
+    return (await this.getAuthToken()) !== null;
   }
 }
