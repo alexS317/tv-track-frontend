@@ -1,0 +1,16 @@
+ion-card-content {
+  padding: 0;
+}
+
+ion-select {
+  --highlight-color-focused: var(--select-text-color);
+  --highlight-color-valid: var(--select-text-color);
+}
+
+ion-select::part(text) {
+  color: var(--select-text-color);
+}
+
+ion-select::part(icon) {
+  color: var(--select-text-color);
+}

@@ -8,9 +8,12 @@ import {
   IonCardTitle,
   IonIcon,
   IonText,
+  IonRouterLink,
 } from '@ionic/angular';
 import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { ShowStatus } from '../../../../constants/show-status.enum';
+import { RouterLink } from '@angular/router';
+import { AppRoutes } from '../../../../app.routes';
 
 @Component({
   selector: 'app-show-card',
@@ -26,9 +29,12 @@ import { ShowStatus } from '../../../../constants/show-status.enum';
     IonCard,
     DatePipe,
     NgOptimizedImage,
+    RouterLink,
+    IonRouterLink,
   ],
 })
 export class ShowCardComponent {
+  protected readonly routes = AppRoutes;
   public readonly show = input.required<ShowResponse>();
   protected readonly statusColor = computed(() => {
     switch (this.show().status) {

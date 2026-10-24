@@ -11,4 +11,8 @@ export class ShowService {
   public async getAllShows(): Promise<ShowResponse[]> {
     return await this.api.get<ShowResponse[]>(SHOWS_ENDPOINT);
   }
+
+  public async getShow(id: string): Promise<ShowResponse> {
+    return await this.api.get(`${SHOWS_ENDPOINT}/${id}`);
+  }
 }

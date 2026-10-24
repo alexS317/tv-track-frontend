@@ -1,4 +1,7 @@
-<ion-card class="flex min-h-[175px] flex-row justify-between">
+<ion-card
+  [routerLink]="['/', routes.SHOWS, show().id]"
+  class="flex min-h-[175px] flex-row justify-between"
+>
   @if (show().coverImage) {
     <img
       [ngSrc]="`https://static.tvmaze.com/uploads/images/medium_portrait/${show().coverImage}`"
@@ -16,7 +19,7 @@
   <div class="flex grow flex-col justify-between gap-3 p-4">
     <ion-card-header class="flex flex-col gap-1">
       <ion-card-title class="text-2xl font-bold">{{ show().title }}</ion-card-title>
-      <ion-card-subtitle>{{ show().createdAt | date }}</ion-card-subtitle>
+      <ion-card-subtitle>Saved {{ show().createdAt | date }}</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>

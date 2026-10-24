@@ -1,0 +1,80 @@
+<ion-card class="p-4">
+  <ion-card-header class="flex flex-col pb-4">
+    <ion-card-title class="text-xl font-semibold">Personal Statistics</ion-card-title>
+    <ion-card-subtitle>Saved {{ showDetails().createdAt | date }}</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <form class="flex flex-col items-end gap-2" [formGroup]="form">
+      <app-input-wrapper label="Rating" class="w-full">
+        <span class="flex flex-row items-center justify-end gap-2">
+          <ion-icon name="star" size="large"></ion-icon>
+          <ion-input
+            type="number"
+            min="1"
+            max="10"
+            errorText="Choose a rating between 1 and 10."
+            fill="outline"
+            mode="md"
+            formControlName="personalRating"
+          ></ion-input>
+        </span>
+      </app-input-wrapper>
+
+      <app-input-wrapper label="Started watching" class="w-full">
+        <ion-datetime-button datetime="started-watching">
+          @if (!form.controls.startedWatching.value) {
+            <span slot="date-target">Select date</span>
+          }
+        </ion-datetime-button>
+        <ion-popover [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime
+              id="started-watching"
+              presentation="date"
+              [showClearButton]="true"
+              formControlName="startedWatching"
+            ></ion-datetime>
+          </ng-template>
+        </ion-popover>
+      </app-input-wrapper>
+
+      <app-input-wrapper label="Finished watching" class="w-full">
+        <ion-datetime-button datetime="finished-watching">
+          @if (!form.controls.finishedWatching.value) {
+            <span slot="date-target">Select date</span>
+          }
+        </ion-datetime-button>
+        <ion-popover [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime
+              id="finished-watching"
+              presentation="date"
+              [showClearButton]="true"
+              formControlName="finishedWatching"
+            ></ion-datetime>
+          </ng-template>
+        </ion-popover>
+      </app-input-wrapper>
+
+      <ion-select
+        class="w-fit text-xl"
+        [style.--select-text-color]="`var(--ion-color-${statusColor()})`"
+        [required]="true"
+        interface="popover"
+        aria-label="Status"
+        formControlName="status"
+      >
+        <ion-select-option [value]="statusOptions.PLANNED">{{
+          statusOptions.PLANNED
+        }}</ion-select-option>
+        <ion-select-option [value]="statusOptions.WATCHING">{{
+          statusOptions.WATCHING
+        }}</ion-select-option>
+        <ion-select-option [value]="statusOptions.FINISHED">{{
+          statusOptions.FINISHED
+        }}</ion-select-option>
+      </ion-select>
+    </form>
+  </ion-card-content>
+</ion-card>
