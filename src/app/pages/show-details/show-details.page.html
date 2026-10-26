@@ -9,18 +9,64 @@
 <ion-content [fullscreen]="true">
   <div class="flex flex-col gap-6 p-4">
     <div class="flex flex-row gap-4">
-      <img
-        class="w-2/5 md:w-auto"
-        [ngSrc]="`https://static.tvmaze.com/uploads/images/medium_portrait/${showDetails().coverImage}`"
-        width="210"
-        height="295"
-        [priority]="true"
-        alt=""
-      />
+      @if (showDetails().coverImage) {
+        <img
+          class="w-2/5 md:w-auto"
+          [ngSrc]="`https://static.tvmaze.com/uploads/images/medium_portrait/${showDetails().coverImage}`"
+          width="210"
+          height="295"
+          [priority]="true"
+          alt=""
+        />
+      } @else {
+        <div
+          class="img-fallback flex aspect-3/4 w-2/5 max-w-[210px] items-center justify-center p-2"
+        >
+          <p class="text-center">No cover image available.</p>
+        </div>
+      }
       <div class="flex flex-col">
-        <ion-text class="text-2xl font-bold">{{ showDetails().title }}</ion-text>
+        <ion-text class="pb-2 text-2xl font-bold">{{ showDetails().title }}</ion-text>
+        <ion-text>{{ showDetails().tvmazeShowData?.language }}</ion-text>
+        <ul class="flex flex-row gap-1">
+          @for (genre of showDetails().tvmazeShowData?.genres; track $index) {
+            <li>
+              @if ($index > 0) {
+                |
+              }
+              <ion-text>{{ genre }}</ion-text>
+            </li>
+          }
+        </ul>
+        <ion-text>
+          @if (showDetails().tvmazeShowData?.premiered) {
+            {{ showDetails().tvmazeShowData?.premiered | date: 'yyyy' }} –
+          }
+          @if (showDetails().tvmazeShowData?.ended) {
+            {{ showDetails().tvmazeShowData?.ended | date: 'yyyy' }}
+          }
+          ({{ showDetails().tvmazeShowData?.status }})
+        </ion-text>
+        <ion-text
+          >{{ seasons().length }}
+          @if (seasons().length === 1) {
+            season
+          } @else {
+            seasons
+          }
+        </ion-text>
+        <ion-text class="flex flex-row items-center gap-1">
+          <span>Avg. Rating: {{ showDetails().tvmazeShowData?.averageRating }}</span>
+          <ion-icon name="star" size="small"></ion-icon
+        ></ion-text>
       </div>
     </div>
-    <app-personal-statistics [showDetails]="showDetails()"></app-personal-statistics>
+
+    <app-personal-statistics
+      class="max-w-[600px]"
+      [showDetails]="showDetails()"
+    ></app-personal-statistics>
+
+    <ion-text class="summary" [innerHTML]="showDetails().tvmazeShowData?.summary"></ion-text>
   </div>
 </ion-content>

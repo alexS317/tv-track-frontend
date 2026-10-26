@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -6,6 +6,7 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
   IonText,
   IonToolbar,
 } from '@ionic/angular';
@@ -17,6 +18,7 @@ import { PersonalStatisticsComponent } from './components/personal-statistics/pe
   templateUrl: './show-details.page.html',
   styleUrls: ['./show-details.page.scss'],
   imports: [
+    IonIcon,
     IonText,
     IonBackButton,
     IonButtons,
@@ -31,4 +33,8 @@ import { PersonalStatisticsComponent } from './components/personal-statistics/pe
 })
 export class ShowDetailsPage {
   public readonly showDetails = input.required<ShowResponse>();
+  protected readonly seasons = computed(() => {
+    const s = this.showDetails().tvmazeShowData?.episodes.map(e => e.season);
+    return [...new Set(s)]; // Set object automatically stores only unique values
+  });
 }

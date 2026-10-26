@@ -7,8 +7,8 @@ import { firstValueFrom } from 'rxjs';
 export class ApiService {
   private readonly http = inject(HttpClient);
 
-  public get<T>(url: string): Promise<T> {
-    return this.makeRequest('get', url);
+  public get<T>(url: string, useEnvUrl = true): Promise<T> {
+    return this.makeRequest('get', url, undefined, useEnvUrl);
   }
 
   public post<T>(url: string, body: unknown): Promise<T> {
@@ -31,9 +31,16 @@ export class ApiService {
     method: 'get' | 'post' | 'put' | 'patch' | 'delete',
     url: string,
     body?: unknown,
+    useEnvUrl = true,
   ): Promise<T> {
-    const fullUrl = environment.apiUrl + url;
     let observable;
+    let fullUrl;
+
+    if (useEnvUrl) {
+      fullUrl = environment.apiUrl + url;
+    } else {
+      fullUrl = url;
+    }
 
     switch (method) {
       case 'get':
