@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="flex flex-col gap-6 p-4">
+  <div class="m-auto flex max-w-300 flex-col gap-6 p-4">
     <div class="flex flex-row gap-4">
       @if (showDetails().coverImage) {
         <img
@@ -62,11 +62,40 @@
       </div>
     </div>
 
-    <app-personal-statistics
+    <app-personal-statistics-form
       class="max-w-[600px]"
       [showDetails]="showDetails()"
-    ></app-personal-statistics>
+    ></app-personal-statistics-form>
 
     <ion-text class="summary" [innerHTML]="showDetails().tvmazeShowData?.summary"></ion-text>
+
+    <ion-segment
+      mode="md"
+      [scrollable]="true"
+      [value]="currentSeason()"
+      (ionChange)="onChangeSegment($event)"
+    >
+      @for (season of seasons(); track $index) {
+        <ion-segment-button [value]="season" [contentId]="season">
+          <ion-label>Season {{ season }}</ion-label>
+        </ion-segment-button>
+      }
+    </ion-segment>
+    <ion-segment-view
+      #segmentView
+      [style.height.px]="currentSeasonListHeight()"
+      class="overflow-y-clip"
+    >
+      @for (season of seasons(); track $index) {
+        <ion-segment-content #segmentContent [id]="season" class="flex h-fit flex-col gap-4">
+          @for (episode of filterSeasonEpisodes(season); track $index) {
+            <app-episode-card
+              [episode]="episode"
+              [currentlyWatching]="showDetails().currentEpisodeId === episode.id"
+            ></app-episode-card>
+          }
+        </ion-segment-content>
+      }
+    </ion-segment-view>
   </div>
 </ion-content>

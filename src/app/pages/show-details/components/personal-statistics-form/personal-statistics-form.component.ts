@@ -21,9 +21,9 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { InputWrapperComponent } from '../input-wrapper/input-wrapper.component';
 
 @Component({
-  selector: 'app-personal-statistics',
-  templateUrl: './personal-statistics.component.html',
-  styleUrls: ['./personal-statistics.component.scss'],
+  selector: 'app-personal-statistics-form',
+  templateUrl: './personal-statistics-form.component.html',
+  styleUrls: ['./personal-statistics-form.component.scss'],
   imports: [
     IonPopover,
     IonDatetimeButton,
@@ -42,7 +42,7 @@ import { InputWrapperComponent } from '../input-wrapper/input-wrapper.component'
     InputWrapperComponent,
   ],
 })
-export class PersonalStatisticsComponent implements OnInit {
+export class PersonalStatisticsFormComponent implements OnInit {
   public readonly showDetails = input.required<ShowResponse>();
 
   protected readonly form = new FormGroup({
