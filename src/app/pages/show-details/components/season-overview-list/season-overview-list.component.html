@@ -1,0 +1,26 @@
+<ion-segment
+  class="mb-6"
+  mode="md"
+  [scrollable]="true"
+  [value]="currentSeason()"
+  (ionChange)="onChangeSegment($event)"
+>
+  @for (season of seasons(); track $index) {
+    <ion-segment-button [value]="season" [contentId]="season">
+      <ion-label>Season {{ season }}</ion-label>
+    </ion-segment-button>
+  }
+</ion-segment>
+
+<ion-segment-view [style.height.px]="currentSeasonListHeight()" class="overflow-y-clip">
+  @for (season of seasons(); track $index) {
+    <ion-segment-content #segmentContent [id]="season" class="flex h-fit flex-col gap-4">
+      @for (episode of filterSeasonEpisodes(season); track $index) {
+        <app-episode-card
+          [episode]="episode"
+          [currentlyWatching]="showDetails().currentEpisodeId === episode.id"
+        ></app-episode-card>
+      }
+    </ion-segment-content>
+  }
+</ion-segment-view>
