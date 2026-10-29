@@ -1,8 +1,9 @@
 import { inject, Service } from '@angular/core';
 import { ApiService } from './api.service';
-import { ShowResponse, TvmazeDto } from '../types/show.types';
+import { ShowResponse, TvmazeDto, UpdateShowRequest } from '../types/show.types';
+import { AppRoutes } from '../app.routes';
 
-const SHOWS_ENDPOINT = '/shows';
+const SHOWS_ENDPOINT = `/${AppRoutes.SHOWS}`;
 
 @Service()
 export class ShowService {
@@ -12,7 +13,7 @@ export class ShowService {
     return await this.api.get<ShowResponse[]>(SHOWS_ENDPOINT);
   }
 
-  public async getShow(id: string): Promise<ShowResponse> {
+  public async getShow(id: number): Promise<ShowResponse> {
     const show = await this.api.get<ShowResponse>(`${SHOWS_ENDPOINT}/${id}`);
 
     const tvmazeDto = await this.api.get<TvmazeDto>(
@@ -41,5 +42,13 @@ export class ShowService {
     };
 
     return show;
+  }
+
+  public async updateShow(id: number, body: UpdateShowRequest): Promise<ShowResponse> {
+    return await this.api.patch<ShowResponse>(`${SHOWS_ENDPOINT}/${id}`, body);
+  }
+
+  public async deleteShow(id: number): Promise<void> {
+    return await this.api.delete<void>(`${SHOWS_ENDPOINT}/${id}`);
   }
 }

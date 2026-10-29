@@ -7,6 +7,8 @@ import {
   signal,
   afterNextRender,
   OnDestroy,
+  linkedSignal,
+  inject,
 } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -24,16 +26,24 @@ import {
   IonSegmentView,
   IonSegmentContent,
   SegmentCustomEvent,
+  IonButton,
+  IonAlert,
 } from '@ionic/angular';
 import { ShowResponse, TvmazeEpisodeData } from '../../types/show.types';
 import { PersonalStatisticsFormComponent } from './components/personal-statistics-form/personal-statistics-form.component';
 import { EpisodeCardComponent } from './components/episode-card/episode-card.component';
+import { ShowService } from '../../services/show.service';
+import { Router } from '@angular/router';
+import { AppRoutes } from '../../app.routes';
+import { ReadMoreComponent } from './components/read-more/read-more.component';
 
 @Component({
   selector: 'app-show-details',
   templateUrl: './show-details.page.html',
   styleUrls: ['./show-details.page.scss'],
   imports: [
+    IonAlert,
+    IonButton,
     IonLabel,
     IonSegment,
     IonSegmentButton,
@@ -51,18 +61,23 @@ import { EpisodeCardComponent } from './components/episode-card/episode-card.com
     IonSegmentContent,
     EpisodeCardComponent,
     PersonalStatisticsFormComponent,
+    ReadMoreComponent,
   ],
 })
 export class ShowDetailsPage implements OnDestroy {
+  private readonly router = inject(Router);
+  private readonly showService = inject(ShowService);
   public readonly showDetails = input.required<ShowResponse>();
+  public readonly showDetailsState = linkedSignal(() => this.showDetails());
   private readonly segmentContents = viewChildren('segmentContent', { read: ElementRef });
+
   protected readonly seasons = computed(() => {
-    const s = this.showDetails().tvmazeShowData?.episodes.map(e => e.season);
+    const s = this.showDetailsState().tvmazeShowData?.episodes.map(e => e.season);
     return [...new Set(s)]; // Set object automatically stores only unique values
   });
   private readonly currentEpisode = computed(() =>
-    this.showDetails().tvmazeShowData?.episodes.find(
-      e => e.id === this.showDetails().currentEpisodeId,
+    this.showDetailsState().tvmazeShowData?.episodes.find(
+      e => e.id === this.showDetailsState().currentEpisodeId,
     ),
   );
   private readonly selectedSeason = signal<number | null>(null);
@@ -74,6 +89,11 @@ export class ShowDetailsPage implements OnDestroy {
     () => this.listHeightsBySeason()[this.currentSeason()] ?? 0,
   );
   private resizeObserver?: ResizeObserver;
+
+  public deleteAlertButtons = [
+    { text: 'Cancel', role: 'cancel' },
+    { text: 'Confirm', role: 'confirm' },
+  ];
 
   constructor() {
     afterNextRender(() => {
@@ -97,11 +117,26 @@ export class ShowDetailsPage implements OnDestroy {
   }
 
   protected filterSeasonEpisodes(season: number): TvmazeEpisodeData[] {
-    return this.showDetails().tvmazeShowData?.episodes.filter(e => e.season === season) ?? [];
+    return this.showDetailsState().tvmazeShowData?.episodes.filter(e => e.season === season) ?? [];
   }
 
-  protected onChangeSegment(event: SegmentCustomEvent) {
+  protected onChangeSegment(event: SegmentCustomEvent): void {
     const value = event.detail.value as number;
     this.selectedSeason.set(value);
+  }
+
+  protected onFormSaved(show: ShowResponse): void {
+    this.showDetailsState.update(current => ({
+      ...current,
+      ...show,
+      tvmazeShowData: this.showDetails().tvmazeShowData,
+    }));
+  }
+
+  protected async onDelete(event: CustomEvent): Promise<void> {
+    if (event.detail.role === 'confirm') {
+      await this.showService.deleteShow(this.showDetailsState().id);
+      this.router.navigate([AppRoutes.HOME]);
+    }
   }
 }

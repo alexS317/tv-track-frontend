@@ -1,0 +1,25 @@
+<div class="relative">
+  <div
+    class="relative after:absolute after:inset-x-0 after:bottom-0 after:h-20 after:bg-linear-to-b after:from-transparent after:to-(--ion-background-color) after:content-['']"
+    [class.after:hidden]="!collapsed() || !hasOverflow()"
+  >
+    <ion-text
+      #summary
+      class="summary"
+      [class]="collapsed() ? `line-clamp-${lines()}` : 'line-clamp-none'"
+      [innerHTML]="text()"
+    ></ion-text>
+  </div>
+
+  @if (hasOverflow()) {
+    <ion-button
+      class="w-full"
+      [class]="collapsed() ? 'absolute -bottom-5' : 'relative'"
+      fill="clear"
+      expand="block"
+      (click)="onToggle()"
+    >
+      <ion-icon size="large" [name]="collapsed() ? 'chevron-down' : 'chevron-up'"></ion-icon>
+    </ion-button>
+  }
+</div>

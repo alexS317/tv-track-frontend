@@ -5,7 +5,7 @@
   </ion-card-header>
 
   <ion-card-content>
-    <form class="flex flex-col items-end gap-2" [formGroup]="form">
+    <form class="flex flex-col items-end gap-2" [formGroup]="form" (ngSubmit)="onSave()">
       <app-input-wrapper label="Rating" class="w-full">
         <span class="flex flex-row items-center justify-end gap-2">
           <ion-icon name="star" size="large"></ion-icon>
@@ -34,6 +34,7 @@
               presentation="date"
               [showClearButton]="true"
               formControlName="startedWatching"
+              (ionChange)="onDateChange($event, form.controls.startedWatching)"
             ></ion-datetime>
           </ng-template>
         </ion-popover>
@@ -52,10 +53,25 @@
               presentation="date"
               [showClearButton]="true"
               formControlName="finishedWatching"
+              (ionChange)="onDateChange($event, form.controls.finishedWatching)"
             ></ion-datetime>
           </ng-template>
         </ion-popover>
       </app-input-wrapper>
+
+      <ion-select
+        class="text-lg"
+        label="Current episode"
+        interface="popover"
+        formControlName="currentEpisodeId"
+      >
+        <ion-select-option [value]="null">None</ion-select-option>
+        @for (episode of showDetails().tvmazeShowData?.episodes; track $index) {
+          <ion-select-option [value]="episode.id">
+            S{{ episode.season }} E{{ episode.number }}
+          </ion-select-option>
+        }
+      </ion-select>
 
       <ion-select
         class="w-fit text-xl"

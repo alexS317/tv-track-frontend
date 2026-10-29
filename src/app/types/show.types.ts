@@ -17,6 +17,16 @@ export interface ShowResponse {
   tvmazeShowData?: TvmazeShowData;
 }
 
+export interface UpdateShowRequest {
+  status: ShowStatus;
+  personalRating?: number;
+  startedWatching?: string;
+  finishedWatching?: string;
+  currentEpisodeId?: number;
+  currentSeason?: number;
+  currentEpisode?: number;
+}
+
 export interface TvmazeShowData {
   language: string;
   genres: string[];

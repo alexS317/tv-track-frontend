@@ -40,16 +40,12 @@ export class ShowCardComponent {
     switch (this.show().status) {
       case ShowStatus.PLANNED:
         return 'danger';
-        break;
       case ShowStatus.WATCHING:
         return 'primary';
-        break;
       case ShowStatus.FINISHED:
         return 'success';
-        break;
       default:
         return 'medium';
-        break;
     }
   });
 }

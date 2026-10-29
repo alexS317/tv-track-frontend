@@ -11,5 +11,5 @@ export const showDetailsResolver: ResolveFn<ShowResponse> = route => {
     throw new Error('Show ID is required.');
   }
 
-  return showService.getShow(showId);
+  return showService.getShow(Number(showId));
 };
