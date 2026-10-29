@@ -1,13 +1,29 @@
 import { inject, Service } from '@angular/core';
 import { ApiService } from './api.service';
-import { ShowResponse, TvmazeDto, UpdateShowRequest } from '../types/show.types';
+import { CreateShowRequest, ShowResponse, TvmazeDto, UpdateShowRequest } from '../types/show.types';
 import { AppRoutes } from '../app.routes';
+import { HttpUrlEncodingCodec } from '@angular/common/http';
 
 const SHOWS_ENDPOINT = `/${AppRoutes.SHOWS}`;
 
 @Service()
 export class ShowService {
   private readonly api = inject(ApiService);
+
+  public async searchShows(query: string): Promise<CreateShowRequest[]> {
+    const encodedParam = new HttpUrlEncodingCodec().encodeValue(query);
+
+    const dto = await this.api.get<{ score: number; show: TvmazeDto }[]>(
+      `https://api.tvmaze.com/search/shows?q=${encodedParam}`,
+      false,
+    );
+
+    return dto.map(d => ({
+      tvmazeId: d.show.id,
+      title: d.show.name,
+      coverImage: d.show.image?.medium,
+    }));
+  }
 
   public async getAllShows(): Promise<ShowResponse[]> {
     return await this.api.get<ShowResponse[]>(SHOWS_ENDPOINT);
@@ -42,6 +58,10 @@ export class ShowService {
     };
 
     return show;
+  }
+
+  public async addShow(body: CreateShowRequest): Promise<ShowResponse> {
+    return await this.api.post(SHOWS_ENDPOINT, body);
   }
 
   public async updateShow(id: number, body: UpdateShowRequest): Promise<ShowResponse> {

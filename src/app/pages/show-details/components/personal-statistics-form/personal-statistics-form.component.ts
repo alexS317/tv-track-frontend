@@ -135,7 +135,6 @@ export class PersonalStatisticsFormComponent implements OnInit {
 
     try {
       const response = await this.showService.updateShow(this.showDetails().id, request);
-
       this.saved.emit(response);
     } catch (error) {
       if (error instanceof HttpErrorResponse) {

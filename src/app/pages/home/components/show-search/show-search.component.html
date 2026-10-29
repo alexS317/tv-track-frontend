@@ -1,0 +1,30 @@
+<div class="relative">
+  <ion-searchbar
+    class="m-auto max-w-[600px]"
+    mode="ios"
+    [debounce]="1000"
+    (ionInput)="onSearch($event)"
+    (ionFocus)="isFocused.set(true)"
+    (ionBlur)="isFocused.set(false)"
+  ></ion-searchbar>
+
+  @if (searchResults().length > 0 && isFocused()) {
+    <ion-list class="fixed z-10 w-full" lines="full">
+      @for (result of searchResults(); track $index) {
+        <ion-item>
+          @if (result.coverImage) {
+            <ion-thumbnail slot="start">
+              <img [ngSrc]="result.coverImage" alt="" width="210" height="295" loading="lazy" />
+            </ion-thumbnail>
+          }
+          <ion-label
+            ><ion-text class="px-2 text-lg font-medium">{{ result.title }}</ion-text>
+          </ion-label>
+          <ion-button slot="end" fill="clear" (click)="onAdd(result)">
+            <ion-icon name="add" size="large" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-item>
+      }
+    </ion-list>
+  }
+</div>

@@ -19,7 +19,7 @@ export class ReadMoreComponent implements OnDestroy {
   public readonly text = input.required<string>();
   public readonly lines = input<number>(5);
   protected readonly collapsed = signal<boolean>(true);
-  protected readonly hasOverflow = signal<boolean>(false);
+  protected readonly hasOverflow = signal<boolean>(true);
   private readonly summary = viewChild('summary', { read: ElementRef });
   private resizeObserver?: ResizeObserver;
 

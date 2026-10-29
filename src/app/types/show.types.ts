@@ -17,6 +17,12 @@ export interface ShowResponse {
   tvmazeShowData?: TvmazeShowData;
 }
 
+export interface CreateShowRequest {
+  tvmazeId: number;
+  title: string;
+  coverImage?: string;
+}
+
 export interface UpdateShowRequest {
   status: ShowStatus;
   personalRating?: number;
@@ -51,6 +57,8 @@ export interface TvmazeEpisodeData {
 }
 
 export interface TvmazeDto {
+  id: number;
+  name: string;
   language: string;
   genres: string[];
   premiered?: string;
@@ -60,6 +68,7 @@ export interface TvmazeDto {
   officialSite?: string;
   network?: { name?: string };
   webChannel?: { name?: string };
+  image?: { medium?: string };
   summary?: string;
   _embedded: {
     episodes: {
