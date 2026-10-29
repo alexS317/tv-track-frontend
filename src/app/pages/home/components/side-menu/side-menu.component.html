@@ -8,7 +8,20 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content></ion-content>
+  <ion-content>
+    <div class="flex flex-col justify-between p-1">
+      <ion-list lines="none">
+        @for (item of menuItems; track $index) {
+          <ion-item class="py-1" [button]="true" [detail]="false" (click)="onFilter(item.status)">
+            <ion-icon [name]="item.icon" size="large"> </ion-icon>
+            <ion-label class="px-3">
+              <ion-text class="text-lg capitalize">{{ item.label }}</ion-text>
+            </ion-label>
+          </ion-item>
+        }
+      </ion-list>
+    </div>
+  </ion-content>
 
   <ion-footer>
     <ion-toolbar>
@@ -18,9 +31,7 @@
         <ion-icon name="moon" size="large"></ion-icon>
       </div>
       <ion-buttons class="flex flex-row justify-center pb-2">
-        <ion-button (click)="onResetToSystemTheme()"
-          >Reset to system preferences</ion-button
-        >
+        <ion-button (click)="onResetToSystemTheme()">Reset to system preferences</ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-footer>

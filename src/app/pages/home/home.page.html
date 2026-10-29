@@ -1,4 +1,4 @@
-<app-side-menu></app-side-menu>
+<app-side-menu (filtered)="onFilterShows($event)"></app-side-menu>
 
 <ion-header [translucent]="true">
   <ion-toolbar>
@@ -17,7 +17,7 @@
   <app-show-search (added)="onShowAdded($event)"></app-show-search>
 
   <ul class="flex flex-col items-center gap-4 p-4">
-    @for (show of showsState(); track show.id) {
+    @for (show of filteredShows(); track show.id) {
       <li class="w-full max-w-[600px]">
         <app-show-card [show]="show"></app-show-card>
       </li>

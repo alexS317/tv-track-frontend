@@ -46,7 +46,7 @@ export class ShowSearchComponent {
     this.searchResults.set(response);
   }
 
-  protected async onAdd(request: CreateShowRequest) {
+  protected async onAdd(request: CreateShowRequest): Promise<void> {
     const imageLink = request.coverImage?.split('medium_portrait/')[1];
 
     try {

@@ -3,13 +3,17 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import {
   add,
+  checkmarkCircle,
   chevronDown,
   chevronUp,
   film,
+  heart,
   logOut,
   moon,
+  refresh,
   star,
   sunny,
+  time,
   trash,
 } from 'ionicons/icons';
 
@@ -20,6 +24,20 @@ import {
 })
 export class AppComponent {
   constructor() {
-    addIcons({ sunny, moon, film, logOut, star, trash, chevronUp, chevronDown, add });
+    addIcons({
+      sunny,
+      moon,
+      film,
+      logOut,
+      star,
+      trash,
+      chevronUp,
+      chevronDown,
+      add,
+      heart,
+      time,
+      refresh,
+      checkmarkCircle,
+    });
   }
 }
