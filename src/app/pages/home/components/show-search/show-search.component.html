@@ -12,11 +12,13 @@
     <ion-list class="fixed z-10 w-full" lines="full">
       @for (result of searchResults(); track $index) {
         <ion-item>
-          @if (result.coverImage) {
-            <ion-thumbnail slot="start">
-              <img [ngSrc]="result.coverImage" alt="" width="210" height="295" loading="lazy" />
-            </ion-thumbnail>
-          }
+          <ion-thumbnail slot="start">
+            <app-image-fallback
+              [imageSrc]="result.coverImage"
+              [fullSrc]="true"
+              fallbackClasses="aspect-square"
+            ></app-image-fallback>
+          </ion-thumbnail>
           <ion-label
             ><ion-text class="px-2 text-lg font-medium">{{ result.title }}</ion-text>
           </ion-label>

@@ -1,21 +1,13 @@
 <div class="flex flex-col gap-3">
   <div class="flex flex-row items-start gap-3">
-    @if (episode().image) {
-      <img
-        class="aspect-16/9 w-2/5 max-w-[250px] basis-2/5 object-contain md:w-auto md:basis-auto"
-        [ngSrc]="episode().image!"
-        alt=""
-        width="250"
-        height="140"
-        loading="lazy"
-      />
-    } @else {
-      <div
-        class="img-fallback flex aspect-16/9 w-2/5 max-w-[250px] items-center justify-center p-2"
-      >
-        <p class="text-center">No cover image available.</p>
-      </div>
-    }
+    <app-image-fallback
+      [imageSrc]="episode().image"
+      [fullSrc]="true"
+      format="landscape"
+      imageClasses="aspect-16/9 w-2/5 max-w-[250px] basis-2/5 object-contain md:w-auto md:basis-auto"
+      fallbackClasses="aspect-16/9 w-2/5 max-w-[250px]"
+    ></app-image-fallback>
+
     <div class="flex basis-3/5 flex-col">
       @if (currentlyWatching()) {
         <ion-text class="text-lg font-semibold uppercase" color="primary"

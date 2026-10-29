@@ -12,9 +12,9 @@ import {
 } from '@ionic/angular';
 import { CreateShowRequest, ShowResponse } from '../../../../types/show.types';
 import { ShowService } from '../../../../services/show.service';
-import { NgOptimizedImage } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from '../../../../services/toast.service';
+import { ImageFallbackComponent } from '../../../../components/image-fallback/image-fallback.component';
 
 @Component({
   selector: 'app-show-search',
@@ -30,7 +30,7 @@ import { ToastService } from '../../../../services/toast.service';
     IonItem,
     IonLabel,
     IonThumbnail,
-    NgOptimizedImage,
+    ImageFallbackComponent,
   ],
 })
 export class ShowSearchComponent {

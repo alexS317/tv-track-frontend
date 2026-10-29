@@ -1,0 +1,18 @@
+@if (imageSrc()) {
+  <img
+    [class]="imageClasses()"
+    [ngSrc]="
+      fullSrc()
+        ? imageSrc()!
+        : `https://static.tvmaze.com/uploads/images/medium_${format()}/${imageSrc()!}`
+    "
+    [width]="dimensions().width"
+    [height]="dimensions().height"
+    [priority]="hasPriority()"
+    alt=""
+  />
+} @else {
+  <div class="img-fallback flex items-center justify-center p-2" [class]="fallbackClasses()">
+    <p class="text-center">No cover image available.</p>
+  </div>
+}

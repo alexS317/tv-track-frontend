@@ -10,10 +10,11 @@ import {
   IonText,
   IonRouterLink,
 } from '@ionic/angular';
-import { DatePipe, NgOptimizedImage } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { ShowStatus } from '../../../../constants/show-status.enum';
 import { RouterLink } from '@angular/router';
 import { AppRoutes } from '../../../../app.routes';
+import { ImageFallbackComponent } from '../../../../components/image-fallback/image-fallback.component';
 
 @Component({
   selector: 'app-show-card',
@@ -28,9 +29,9 @@ import { AppRoutes } from '../../../../app.routes';
     IonCardHeader,
     IonCard,
     DatePipe,
-    NgOptimizedImage,
     RouterLink,
     IonRouterLink,
+    ImageFallbackComponent,
   ],
 })
 export class ShowCardComponent {

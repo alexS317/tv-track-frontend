@@ -1,5 +1,5 @@
 import { Component, computed, input, linkedSignal, inject } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
   IonBackButton,
@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 import { AppRoutes } from '../../app.routes';
 import { ReadMoreComponent } from './components/read-more/read-more.component';
 import { SeasonOverviewListComponent } from './components/season-overview-list/season-overview-list.component';
+import { ImageFallbackComponent } from '../../components/image-fallback/image-fallback.component';
 
 @Component({
   selector: 'app-show-details',
@@ -36,10 +37,10 @@ import { SeasonOverviewListComponent } from './components/season-overview-list/s
     IonToolbar,
     CommonModule,
     FormsModule,
-    NgOptimizedImage,
     PersonalStatisticsFormComponent,
     ReadMoreComponent,
     SeasonOverviewListComponent,
+    ImageFallbackComponent,
   ],
 })
 export class ShowDetailsPage {

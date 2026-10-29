@@ -1,13 +1,13 @@
 import { Component, input } from '@angular/core';
 import { TvmazeEpisodeData } from '../../../../types/show.types';
 import { IonText } from '@ionic/angular';
-import { NgOptimizedImage } from '@angular/common';
+import { ImageFallbackComponent } from '../../../../components/image-fallback/image-fallback.component';
 
 @Component({
   selector: 'app-episode-card',
   templateUrl: './episode-card.component.html',
   styleUrls: ['./episode-card.component.scss'],
-  imports: [IonText, NgOptimizedImage],
+  imports: [IonText, ImageFallbackComponent],
 })
 export class EpisodeCardComponent {
   public episode = input.required<TvmazeEpisodeData>();
