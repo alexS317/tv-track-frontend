@@ -66,6 +66,19 @@
       </div>
     </div>
 
+    <a
+      class="after:contents-[''] relative flex w-fit flex-row items-center gap-1 text-xl font-semibold text-(--ion-color-primary-tint) after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-(--ion-color-primary-tint)"
+      [href]="showDetailsState().tvmazeShowData?.officialSite"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span>Watch it now on {{ showDetailsState().tvmazeShowData?.channel }}</span>
+      <span class="relative h-5 w-4">
+        <ion-icon class="absolute top-0 -left-1.5" name="chevron-forward"></ion-icon>
+        <ion-icon class="absolute top-0 left-0" name="chevron-forward"></ion-icon>
+      </span>
+    </a>
+
     <app-personal-statistics-form
       class="max-w-[600px]"
       [showDetails]="showDetailsState()"

@@ -6,14 +6,14 @@
     <ion-text
       #summary
       class="summary"
-      [class]="collapsed() ? `line-clamp-${lines()}` : 'line-clamp-none'"
+      [class]="collapsed() ? lineClamp() : 'line-clamp-none'"
       [innerHTML]="text()"
     ></ion-text>
   </div>
 
   @if (hasOverflow()) {
     <ion-button
-      class="w-full"
+      class="w-full text-(--ion-text-color)"
       [class]="collapsed() ? 'absolute -bottom-5' : 'relative'"
       fill="clear"
       expand="block"

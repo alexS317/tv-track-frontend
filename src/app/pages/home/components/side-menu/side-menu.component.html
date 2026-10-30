@@ -11,6 +11,13 @@
   <ion-content>
     <div class="flex h-full flex-col justify-between p-1">
       <ion-list lines="none">
+        <ion-item>
+          <ion-label>
+            <a href="https://www.tvmaze.com/api" target="_blank" rel="noopener noreferrer"
+              >Powered by TVmaze API</a
+            >
+          </ion-label>
+        </ion-item>
         @for (item of menuFilterItems; track $index) {
           <ion-item class="py-1" [button]="true" [detail]="false" (click)="onFilter(item.status)">
             <ion-icon [name]="item.icon" size="large"> </ion-icon>

@@ -7,6 +7,7 @@ import {
   arrowUp,
   checkmarkCircle,
   chevronDown,
+  chevronForward,
   chevronUp,
   film,
   heart,
@@ -44,6 +45,7 @@ export class AppComponent {
       swapVertical,
       arrowUp,
       arrowDown,
+      chevronForward,
     });
   }
 }
