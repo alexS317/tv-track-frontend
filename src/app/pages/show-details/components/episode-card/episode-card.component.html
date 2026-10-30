@@ -15,7 +15,9 @@
         >
       }
       <ion-text class="text-xl font-semibold">{{ episode().name }}</ion-text>
-      <ion-text>{{ episode().runtime }} min</ion-text>
+      <ion-text class="text-(--ion-text-color-step-400)"
+        >Episode {{ episode().number }} | {{ episode().runtime }} min</ion-text
+      >
     </div>
   </div>
   <ion-text class="summary" [innerHTML]="episode().summary"></ion-text>

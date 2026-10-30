@@ -18,6 +18,9 @@ import {
 } from '@ionic/angular';
 import { ThemeService } from '../../../../services/theme.service';
 import { ShowStatus } from '../../../../constants/show-status.enum';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../../services/auth.service';
+import { AppRoutes } from '../../../../app.routes';
 
 @Component({
   selector: 'app-side-menu',
@@ -42,9 +45,11 @@ import { ShowStatus } from '../../../../constants/show-status.enum';
   ],
 })
 export class SideMenuComponent {
+  private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
   private readonly themeService = inject(ThemeService);
   protected readonly isDark = this.themeService.isDark;
-  protected readonly menuItems = [
+  protected readonly menuFilterItems = [
     { icon: 'heart', label: 'My Shows', status: null },
     { icon: 'time', label: ShowStatus.PLANNED.toLowerCase(), status: ShowStatus.PLANNED },
     { icon: 'refresh', label: ShowStatus.WATCHING.toLowerCase(), status: ShowStatus.WATCHING },
@@ -53,6 +58,9 @@ export class SideMenuComponent {
       label: ShowStatus.FINISHED.toLowerCase(),
       status: ShowStatus.FINISHED,
     },
+  ];
+  protected readonly menuNavItems = [
+    { icon: 'log-out', label: 'Log out', method: () => this.onLogout() },
   ];
   public filtered = output<ShowStatus | null>();
 
@@ -66,5 +74,10 @@ export class SideMenuComponent {
 
   protected onFilter(status: ShowStatus | null): void {
     this.filtered.emit(status);
+  }
+
+  protected async onLogout(): Promise<void> {
+    await this.authService.logout();
+    this.router.navigate([AppRoutes.LOGIN]);
   }
 }

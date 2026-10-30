@@ -6,18 +6,37 @@
       <ion-menu-button [autoHide]="false"></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="onLogout()">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      <ion-button id="sort-shows">
+        <ion-icon slot="icon-only" name="swap-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
+<ion-popover [keepContentsMounted]="true" trigger="sort-shows" side="bottom" alignment="start">
+  <ng-template>
+    <ion-list lines="none">
+      <ion-item class="text-sm text-(--ion-text-color-step-400)">
+        <ion-label>Sort By</ion-label>
+      </ion-item>
+
+      @for (item of sortOptions; track $index) {
+        <ion-item [button]="true" [detail]="false" (click)="onSetSortMode(item.value)">
+          <ion-label>{{ item.label }}</ion-label>
+          @if (sortOption() === item.value) {
+            <ion-icon [name]="sortDirection() === 'asc' ? 'arrow-up' : 'arrow-down'"></ion-icon>
+          }
+        </ion-item>
+      }
+    </ion-list>
+  </ng-template>
+</ion-popover>
+
 <ion-content [fullscreen]="true" id="main">
   <app-show-search (added)="onShowAdded($event)"></app-show-search>
 
   <ul class="flex flex-col items-center gap-4 p-4">
-    @for (show of filteredShows(); track show.id) {
+    @for (show of sortedShows(); track show.id) {
       <li class="w-full max-w-[600px]">
         <app-show-card [show]="show"></app-show-card>
       </li>

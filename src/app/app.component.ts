@@ -3,6 +3,8 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import {
   add,
+  arrowDown,
+  arrowUp,
   checkmarkCircle,
   chevronDown,
   chevronUp,
@@ -13,6 +15,7 @@ import {
   refresh,
   star,
   sunny,
+  swapVertical,
   time,
   trash,
 } from 'ionicons/icons';
@@ -38,6 +41,9 @@ export class AppComponent {
       time,
       refresh,
       checkmarkCircle,
+      swapVertical,
+      arrowUp,
+      arrowDown,
     });
   }
 }
