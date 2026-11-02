@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  publish = "dist/tv-track-frontend/browser"
+  publish = "www"
 
 [[redirects]]
   from = "/*"
