@@ -4,8 +4,8 @@
     mode="ios"
     [debounce]="1000"
     (ionInput)="onSearch($event)"
-    (ionFocus)="isFocused.set(true)"
-    (ionBlur)="isFocused.set(false)"
+    (ionFocus)="setFocused(true)"
+    (ionBlur)="setFocused(false)"
   ></ion-searchbar>
 
   @if (searchResults().length > 0 && isFocused()) {

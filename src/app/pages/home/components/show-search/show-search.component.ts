@@ -40,6 +40,12 @@ export class ShowSearchComponent {
   protected readonly isFocused = signal<boolean>(false);
   public readonly added = output<ShowResponse>();
 
+  protected setFocused(value: boolean) {
+    setTimeout(() => {
+      this.isFocused.set(value);
+    }, 200);
+  }
+
   protected async onSearch(event: SearchbarCustomEvent): Promise<void> {
     const query = event.detail.value?.trim().toLowerCase();
     const response = await this.showService.searchShows(query ?? '');
