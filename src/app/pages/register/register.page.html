@@ -15,6 +15,9 @@
     <ion-text color="primary">
       <h1 class="font-bold">Create an account</h1>
     </ion-text>
+    <ion-text class="max-w-[600px] text-center text-sm" color="danger">{{
+      environment.demoText
+    }}</ion-text>
     <form
       class="flex w-full max-w-[500px] flex-col gap-4 rounded-md p-6"
       [formGroup]="form"

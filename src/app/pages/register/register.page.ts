@@ -25,6 +25,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from '../../services/toast.service';
 import { AppRoutes } from '../../app.routes';
 import { Router, RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 function passwordMatches(control: AbstractControl): ValidationErrors | null {
   const password = control.parent?.get('password')?.value;
@@ -55,6 +56,7 @@ export class RegisterPage {
   private readonly router = inject(Router);
   private readonly toastService = inject(ToastService);
   private readonly authService = inject(AuthService);
+  protected readonly environment = environment;
   protected readonly routes = AppRoutes;
   protected readonly form = new FormGroup({
     name: new FormControl<string>('', [Validators.required]),

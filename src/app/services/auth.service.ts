@@ -15,7 +15,7 @@ export class AuthService {
   public async register(request: RegisterRequest): Promise<void> {
     try {
       const response = await this.api.post<AuthResponse>(REGISTER_ENDPOINT, request);
-      this.userPreferencesService.set(UserPreferences.AUTH_TOKEN, response.token);
+      await this.userPreferencesService.set(UserPreferences.AUTH_TOKEN, response.token);
     } catch (error) {
       throw error;
     }
@@ -24,7 +24,7 @@ export class AuthService {
   public async login(request: LoginRequest): Promise<void> {
     try {
       const response = await this.api.post<AuthResponse>(LOGIN_ENDPOINT, request);
-      this.userPreferencesService.set(UserPreferences.AUTH_TOKEN, response.token);
+      await this.userPreferencesService.set(UserPreferences.AUTH_TOKEN, response.token);
     } catch (error) {
       throw error;
     }
