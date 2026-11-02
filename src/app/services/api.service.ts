@@ -42,9 +42,6 @@ export class ApiService {
       fullUrl = url;
     }
 
-    console.log(environment.apiUrl);
-    console.log(url);
-    console.log(fullUrl);
     switch (method) {
       case 'get':
         observable = this.http.get<T>(fullUrl);
