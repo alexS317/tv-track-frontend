@@ -6,7 +6,7 @@
     <ion-text
       #summary
       class="summary"
-      [class]="collapsed() ? `${lineClamp()}` : 'line-clamp-none'"
+      [class]="collapsed() ? lineClamp() : 'line-clamp-none'"
       [innerHTML]="text()"
     ></ion-text>
   </div>
